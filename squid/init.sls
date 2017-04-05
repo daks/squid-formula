@@ -1,5 +1,5 @@
 # This is the main state file for configuring squid.
-
+{%- set cfg_squid = salt['pillar.get']('squid', {}) -%}
 {% from "squid/map.jinja" import map with context %}
 
 squid_pkgs:
@@ -23,3 +23,4 @@ squid_config:
     - name: {{ map.conf_dir }}/{{ map.conf_file }}
     - source: salt://squid/files/squid.conf
     - template: jinja
+

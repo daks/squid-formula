@@ -2,6 +2,9 @@
 # If no configuration is set, a default one
 #  (potentially wrong and insecure) is generated
 squid:
+  # default configuration can be updated
+  #lookup:
+    #includes_dirname: 'inc'
   # listen to HTTP on these ports
   http_port:
      - 3128
@@ -91,4 +94,17 @@ squid:
 
   extra_configuration:
     - 'cache_peer_domain parent.foo.net        .edu'
+
+  # includes are used to split configuration in several files all included in default
+  # they use mine functions and a template
+  includes:
+    target: '*'
+    expr_form: 'glob'
+    squid_includes_function: 'squid_hosts'
+    template: salt://files/template_squid.conf
+
+mine_functions:
+  squid_hosts:
+    mine_function: pillar.get
+    key: vpn
 
